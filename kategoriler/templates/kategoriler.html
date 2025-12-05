@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block baslik %}{% endblock %}
+
+{% block icerik %}
+        <section id="categories1">
+        <h2 class="section-title">Oyun <span>Kategorileri</span></h2>
+        <div class="category-grid">
+            
+            <div class="game-card">
+                <h3>Aksiyon & Macera</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvKskOablgo2yliuXC-Hl-abVmTD-JNpeYVg&s"  alt="Aksiyon ve Macera görseli" class="card-image">
+                <p>Yüksek tempolu, sürükleyici hikayelerle dolu oyunları keşfedin. Adrenalin ve keşif sizi bekliyor.</p>
+                <a href="{% url 'aksiyon_macera'%}" class="btn">İncele</a> 
+            </div>
+
+            <div class="game-card">
+                <h3>Strateji</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuUsxI08HIORUlLXl5_OPAtUF72_9Ri4jM8g&s"  alt="Strateji ve Simülasyon görseli" class="card-image">
+                <p>Zekanızı, kaynaklarınızı ve taktiklerinizi kullanarak rakiplerinizi alt edin ve büyük bir imparatorluk kurun.</p>
+                <a href="{% url 'strateji'%}" class="btn">İncele</a> 
+            </div>
+
+            <div class="game-card">
+                <h3>Rol Yapma (RPG)</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLhmmilPyy8M8vVOkKEvcc-GWLa5coTsZn_g&s"  alt="RPG görseli" class="card-image">
+                <p>Kendi karakterini yarat, dünyayı keşfet ve destansı hikayelerde seçimlerinin sonuçlarına katlan.</p>
+                <a href="{% url 'rol_yapma'%}" class="btn">İncele</a> 
+            </div>
+        </section>
+        <section id="categories2">
+        </div>
+   
+        <div class="category-grid">
+            
+            <div class="game-card">
+                <h3>Korku</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDLJ6cPNccXUcS5QdcCRvzUfd44x7avQTPqQ&s"  alt="Korku görseli" class="card-image">
+                <p>Korku ve çaresizliğin iç içe geçtiği bu dünyada, hayatta kalmak için karanlığın en derin sırlarıyla yüzleşmeye hazır olun.</p>
+                <a href="{% url 'korku'%}" class="btn">İncele</a> 
+            </div>
+
+            <div class="game-card">
+                <h3>Hayatta Kalma</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQITjYyVcuNN21Q6BsjPYUeDwP4y56yBY3D7A&s"  alt="Hayatta Kalma görseli" class="card-image">
+                <p>Zorlu doğa koşullarına karşı mücadele edin, sıfırdan aletler üretin ve tek bir amaç uğruna savaşın: Nefes almaya devam etmek.</p>
+                <a href="{% url 'hayatta_kalma'%}" class="btn">İncele</a> 
+            </div>
+
+            <div class="game-card">
+                <h3>Spor</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTqFHXlSBW0d5Kg9Y7zrfkoaydrV-BjdjTRwQ&s"  alt="Spor görseli" class="card-image">
+                <p>Stadyumların heyecanını yaşayın, favori takımınızın kontrolünü elinize alın ve küresel rekabetin zirvesine adınızı altın harflerle yazdırın.</p>
+                <a href="{% url 'spor'%}" class="btn">İncele</a> 
+            </div>
+
+        </div>
+    </section>
+
+     <section id="categories3">
+        </div>
+   
+        <div class="category-grid">
+            
+            <div class="game-card">
+                <h3>Platform</h3>
+                <img src="https://unityturkey.wordpress.com/wp-content/uploads/2017/08/castlevania.jpg?w=1920&h=768&crop=1"  alt="Platform görseli" class="card-image">
+                <p>Hassas zıplamalar, akıl almaz engeller ve keşfedilmeyi bekleyen gizli yollarla dolu rengarenk dünyalarda maceraya atılın.</p>
+                <a href="{% url 'platform'%}" class="btn">İncele</a> 
+            </div>
+
+            <div class="game-card">
+                <h3>MMORPG</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNF122wTwDXYUKptN6qylt0jC8007m_NzDog&s"  alt="MMORPG görseli" class="card-image">
+                <p>Kendinize ait efsaneyi yaratın; binlerce oyuncuyla omuz omuza vererek uçsuz bucaksız fantastik diyarları keşfedin, destansı görevlere atılın ve kalıcı bir miras bırakın.</p>
+                <a href="{% url 'mmorpg'%}" class="btn">İncele</a> 
+            </div>
+
+            <div class="game-card">
+                <h3>Simülasyon</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTED804t-Q8pfok5S8PTX-xOOgPTJX0YuSwrA&s"  alt=" görseli" class="card-image">
+                <p>Karmaşık sistemleri kontrol edin, detaylı mekanikleri ustalıkla yönetin ve bir uzay gemisinden bir çiftliğe kadar istediğiniz hayatı sıfırdan inşa edin.</p>
+                <a href="{% url 'simulasyon'%}" class="btn">İncele</a> 
+            </div>
+
+        </div>
+    </section>
+{% endblock %}

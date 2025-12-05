@@ -1,0 +1,23 @@
+{% load static %}
+<header>
+    <div class="logo">GameHub</div>
+    
+    <div class="nav-container">
+        <nav>
+            <ul class="nav-links">
+                <li><a href="{%url 'anasayfa' %}">Ana Sayfa</a></li>
+                <li><a href="{% url 'hakkimizda' %}">Hakkımızda</a></li>
+                <li><a href="{% url 'kategoriler' %}">Kategoriler</a></li> 
+                <li><a href="{% url 'ana_oyunlar'%}">Oyunlar</a></li>
+                 <li><a href="{% url 'iletisim'%}">İletişim</a></li>
+                
+            </ul>
+        </nav>
+
+        <div class="auth-buttons">
+            <a href="{% url 'login'%}" class="nav-btn btn-signin">Giriş Yap</a> 
+            <a href="{% url 'register'%}" class="nav-btn btn-signup">Kayıt Ol</a>
+            
+        </div>
+    </div>
+</header>

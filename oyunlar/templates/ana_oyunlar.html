@@ -1,0 +1,174 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block baslik %}{% endblock %}
+
+{% block icerik %}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>oyun Kart </title>
+    
+    <style>
+       
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212; 
+            color: #E0E0E0; 
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .category-box {
+            background-color: #1f2833; 
+            border: 1px solid #45a29e; /* Çerçeve */
+            border-radius: 8px;
+            padding: 20px;
+            width: 250px;
+            height: 250px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4); /* Gölge */
+            transition: transform 0.3s, box-shadow 0.3s; 
+        }
+
+        .category-box:hover {
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .category-box img {
+              width: 100%;
+              height: 200px;      
+               object-fit: cover;  
+               border-radius: 8px;
+        }
+
+        .category-box h3 {
+            color: #00BCD4; 
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .category-box p {
+            font-size: 0.9em;
+            color: #B0B0B0;
+            margin-bottom: 20px;
+        }
+
+        .button-text {
+            display: inline-block;
+            background-color: #00BCD4; 
+            color: #121212; 
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: default; 
+        }
+    </style>
+</head>
+<body>
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <div style="
+        padding: 20px 40px;
+        border: 2px solid #444;
+        border-radius: 10px;
+        background-color: #1f2833;
+        color: #00BCD4;
+        font-size: 24px;
+        font-weight: bold;">
+       Bu Ayın En Popüler Oyunları
+    </div>
+</div>
+
+
+<div style="
+    display: flex; 
+    justify-content: center; 
+    gap: 40px; 
+    padding: 40px; 
+    background-color: #121212;
+    flex-wrap: wrap;
+    margin-bottom: 60px; 
+">
+
+    <div class="category-box">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmAOJC7xXwMBsESI1s8zkoxtmb9owoAenBeg&s" alt="Görseli">
+        <h3>World of Warcraft</h3>
+        <div><a href="" class="btn">İncele</a></div>
+    </div>
+
+    <div class="category-box">
+        <img src="https://m.media-amazon.com/images/I/71whdsvzYEL._UF1000,1000_QL80_.jpg" alt="Görseli">
+        <h3>Star Wars: The Old Republic</h3>
+        <div><a href="" class="btn">İncele</a></div>
+    </div>
+
+    <div class="category-box">
+        <img src="https://upload.wikimedia.org/wikipedia/en/5/55/The_Lord_of_the_Rings_Online-_Shadows_of_Angmar_box.jpg" alt="Görseli">
+        <h3>Lord of the Rings Online</h3>
+        <div><a href="" class="btn">İncele</a></div>
+    </div>
+
+</div>
+
+<div style="
+    width: 90%; 
+    height: 4px; 
+    margin: 40px auto; 
+    border-radius: 2px;
+    background: linear-gradient(90deg, #00BCD4, #8BC34A, #FFEB3B, #FF5722, #00BCD4);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+"></div>
+
+<div style="display: flex; justify-content: center; margin-top: 20px;">
+    <div style="
+        padding: 20px 40px;
+        border: 2px solid #444;
+        border-radius: 10px;
+        background-color: #1f2833;
+        color: #00BCD4;
+        font-size: 24px;
+        font-weight: bold;">
+       Bu Haftanın En Çok Like Alan Oyunları
+    </div>
+</div>
+
+
+<div style="
+    display: flex; 
+    justify-content: center; 
+    gap: 40px; 
+    padding: 40px; 
+    background-color: #121212;
+    flex-wrap: wrap;
+       margin-bottom: 60px; 
+">
+
+    <div class="category-box">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmAOJC7xXwMBsESI1s8zkoxtmb9owoAenBeg&s" alt="Görseli">
+        <h3>World of Warcraft</h3>
+        <div><a href="" class="btn">İncele</a></div>
+    </div>
+
+    <div class="category-box">
+        <img src="https://m.media-amazon.com/images/I/71whdsvzYEL._UF1000,1000_QL80_.jpg" alt="Görseli">
+        <h3>Star Wars: The Old Republic</h3>
+        <div><a href="" class="btn">İncele</a></div>
+    </div>
+
+    <div class="category-box">
+        <img src="https://upload.wikimedia.org/wikipedia/en/5/55/The_Lord_of_the_Rings_Online-_Shadows_of_Angmar_box.jpg" alt="Görseli">
+        <h3>Lord of the Rings Online</h3>
+        <div><a href="" class="btn">İncele</a></div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
+{% endblock %}

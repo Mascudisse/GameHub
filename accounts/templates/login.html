@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block baslik %}{% endblock %}
+
+{% block icerik %}
+ <section class="auth-section">
+        <div class="auth-card">
+            <h2 class="auth-title">Giriş Yap </h2>
+            <p class="auth-subtitle"> hoş geldiniz  Giriş yapiniz </p>
+            
+            <form action="/giris" method="post" class="auth-form">
+                
+                <div class="form-group">
+                    <label for="id_username">Kullanıcı Adı / E-posta</label>
+                    <input type="text" id="id_username" name="username" placeholder="Kullanıcı adınızı veya e-postanızı girin" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_password">Şifre</label>
+                    <input type="password" id="id_password" name="password" placeholder="Şifrenizi girin" required>
+                </div>
+                
+                <button type="submit" class="btn btn-full">Giriş Yap</button>
+            </form>
+
+            <div class="auth-footer">
+                <a href="/sifremi-unuttum" class="forgot-password">Şifremi Unuttum</a>
+                <p>Hesabın yok mu? <a href="{% url 'register'%}" class="footer-link">Hemen Kayıt Ol!</a></p>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

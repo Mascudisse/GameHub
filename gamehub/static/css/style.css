@@ -1,0 +1,154 @@
+/* --- GENEL AYARLAR, FONTLAR VE ÖZEL DEĞİŞKENLER --- */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap");
+
+/* Ana renk paletini ve fontları tanımlayan değişkenler */
+:root {
+    --color-dark-bg: #0b0c10; /* Çok Koyu Gri/Siyah */
+    --color-secondary-bg: #1f2833; /* Koyu Mavi/Gri (About, Card, Auth) */
+    --color-primary-neon: #66fcf1; /* Neon Mavi/Cyan */
+    --color-secondary-neon: #45a29e; /* Koyu Cyan/Teal */
+    --color-light-text: #c5c6c7; /* Açık Gri Yazı */
+    --color-darkest-bg: #050608; /* Footer arka planı */
+
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Poppins', sans-serif;
+}
+
+/* Bootstrap'ın varsayılanlarını eziyoruz */
+* {
+    /* Margin ve Padding'i Bootstrap'ınkine bırakıyoruz, sadece box-sizing'i tutuyoruz */
+    box-sizing: border-box; 
+}
+
+body {
+    font-family: var(--font-body);
+    background-color: var(--color-dark-bg);
+    color: var(--color-light-text);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+    /* d-flex, flex-column, min-vh-100 ve flex-grow-1, Bootstrap'in yardımcı sınıfları ile karşılanır */
+}
+
+/* a:hover ve ul stili zaten Bootstrap'ın normalizasyonu ile sağlanır */
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: 0.3s;
+}
+
+/* SECTION GENEL - Özel padding ve font */
+.section-padding {
+    padding: 80px 10%; /* Orijinal CSS padding */
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: #fff;
+    margin-bottom: 60px;
+}
+
+.section-title span {
+    color: var(--color-secondary-neon);
+}
+
+/* BUTON GENEL STİLLERİ - Bootstrap'ın varsayılanını eziyoruz */
+.btn-custom {
+    padding: 12px 30px;
+    background-color: var(--color-primary-neon);
+    color: var(--color-dark-bg);
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 1rem;
+    border: 2px solid var(--color-primary-neon);
+    transition: 0.3s;
+}
+
+.btn-custom:hover {
+    background-color: transparent;
+    color: var(--color-primary-neon);
+    border-color: var(--color-primary-neon);
+    cursor: pointer;
+}
+
+/* NAVBAR LOGO - Özel font ve renk */
+.logo {
+    font-family: var(--font-heading);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--color-primary-neon) !important; /* !important ekledik */
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* HERO SECTION - Background ve Text Shadow */
+#home {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80') center center / cover;
+    padding-top: 80px; /* Navbar'ı kurtarmak için */
+}
+
+#home h1 {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    color: #fff;
+    text-shadow: 0 0 20px var(--color-primary-neon);
+}
+
+/* KATEGORİ KARTLARI */
+.game-card {
+    border: 2px solid var(--color-secondary-neon);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.game-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 20px rgba(102, 252, 241, 0.2);
+}
+
+.game-card h3 {
+    font-family: var(--font-heading);
+    color: var(--color-primary-neon);
+}
+
+/* AUTH/İLETİŞİM FORMLARI */
+.auth-section {
+    min-height: 100vh;
+}
+
+.auth-card {
+    box-shadow: 0 0 30px rgba(102, 252, 241, 0.15);
+    max-width: 420px;
+}
+
+.auth-form input:focus, 
+.auth-form textarea:focus {
+    outline: none;
+    border-color: var(--color-primary-neon);
+    box-shadow: 0 0 8px rgba(102, 252, 241, 0.4);
+}
+
+/* FOOTER */
+.gamehub-footer {
+    background-color: var(--color-darkest-bg);
+    border-top: 3px solid var(--color-secondary-neon);
+}
+
+.footer-col h4 {
+    font-family: var(--font-heading);
+    color: var(--color-primary-neon);
+}
+
+.footer-col h4::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 50px;
+    height: 2px;
+    background-color: var(--color-secondary-neon);
+}
+
+.footer-col ul li a:hover {
+    color: var(--color-primary-neon); 
+    padding-left: 5px; 
+}
