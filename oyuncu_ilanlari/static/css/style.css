@@ -1,0 +1,43 @@
+/* GENEL */
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+/* BAŞLIKLAR */
+h2 {
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #212529;
+}
+
+/* KART TASARIM */
+.card-custom {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease;
+}
+
+.card-custom:hover {
+    transform: translateY(-5px);
+}
+
+/* FORM */
+.form-control {
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.btn-primary {
+    border-radius: 10px;
+    padding: 10px 25px;
+    font-weight: 600;
+}
+
+/* FOOTER */
+footer {
+    background: #111;
+    color: #aaa;
+    padding: 30px 0;
+    text-align: center;
+}
