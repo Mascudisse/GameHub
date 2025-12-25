@@ -16,15 +16,12 @@
 {% for ilan in ilanlar %}
 <div class="col-lg-4 col-md-6">
     <div class="card ilan-card h-100 shadow-sm border-0">
-
         <div class="card-body d-flex flex-column">
 
-            <!-- OYUN ADI -->
             <h5 class="card-title fw-bold mb-3 text-primary">
                 🎯 {{ ilan.oyun_adi }}
             </h5>
 
-            <!-- BİLGİLER -->
             <ul class="list-unstyled small mb-3 ilan-bilgi">
                 <li class="mb-1">
                     <i class="fas fa-user text-secondary"></i>
@@ -40,29 +37,22 @@
                 </li>
             </ul>
 
-            <!-- AÇIKLAMA -->
             <p class="ilan-aciklama flex-grow-1 text-muted">
                 {{ ilan.aciklama|truncatechars:120 }}
             </p>
 
-            <!-- BUTONLAR -->
             <div class="mt-3 d-grid gap-2">
-
-                
-
                 <div class="d-flex justify-content-between gap-2">
-
                     <a href="{% url 'oyuncu_ilanlari:ilan_duzenle' ilan.id %}"
                        class="btn btn-outline-warning btn-sm w-100">
-                        ✏️ Düzenle
+                       ✏️ Düzenle
                     </a>
 
                     <a href="{% url 'oyuncu_ilanlari:ilan_sil' ilan.id %}"
                        class="btn btn-outline-danger btn-sm w-100"
                        onclick="return confirm('Bu ilan silinsin mi?')">
-                        🗑️ Sil
+                       🗑️ Sil
                     </a>
-
                 </div>
             </div>
 
@@ -79,9 +69,8 @@
 
 </div>
 
-<!-- YENİ İLAN -->
 <div class="text-center mt-5">
-    <a href="{% url 'ilan_ekle' %}"
+    <a href="{% url 'oyuncu_ilanlari:ilan_ekle' %}"
        class="btn btn-primary btn-lg px-5 py-3 shadow">
         ➕ Yeni İlan Ekle
     </a>
