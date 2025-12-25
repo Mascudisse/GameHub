@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}İlan Düzenle | GameHub{% endblock %}
+
+{% block icerik %}
+<div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+
+        <div class="card ilan-form-card shadow-lg border-0">
+            <div class="card-body p-4 p-md-5">
+
+                <!-- BAŞLIK -->
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold">
+                        ✏️ İlan Düzenle
+                    </h2>
+                    <p class="text-muted mb-0">
+                        İlan bilgilerini güncelleyebilirsin
+                    </p>
+                </div>
+
+                <!-- FORM -->
+                <form method="post">
+                    {% csrf_token %}
+
+                    <!-- OYUN ADI -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            🎮 Oyun Adı
+                        </label>
+                        <input
+                            type="text"
+                            name="oyun_adi"
+                            class="form-control form-control-lg"
+                            value="{{ ilan.oyun_adi }}"
+                            required>
+                    </div>
+
+                    <!-- OYUNCU ADI -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            👤 Oyuncu Adı
+                        </label>
+                        <input
+                            type="text"
+                            name="oyuncu_adi"
+                            class="form-control form-control-lg"
+                            value="{{ ilan.oyuncu_adi }}"
+                            required>
+                    </div>
+
+                    <!-- RANK -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            📊 Rank
+                        </label>
+                        <input
+                            type="text"
+                            name="rank"
+                            class="form-control"
+                            value="{{ ilan.rank }}">
+                    </div>
+
+                    <!-- PLATFORM -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            💻 Platform
+                        </label>
+                        <input
+                            type="text"
+                            name="platform"
+                            class="form-control"
+                            value="{{ ilan.platform }}">
+                    </div>
+
+                    <!-- AÇIKLAMA -->
+                    <div class="mb-4">
+                        <label class="form-label fw-semibold">
+                            📝 Açıklama
+                        </label>
+                        <textarea
+                            name="aciklama"
+                            rows="4"
+                            class="form-control"
+                            placeholder="Kendin ve aradığın takım arkadaşı hakkında bilgi ver...">{{ ilan.aciklama }}</textarea>
+                    </div>
+
+                    <!-- BUTONLAR -->
+                    <div class="d-grid gap-2">
+                        <button type="submit"
+                                class="btn btn-warning btn-lg fw-semibold">
+                            💾 Güncelle
+                        </button>
+
+                        <a href="{% url 'oyuncu_ilanlari:ilan_listesi' %}"
+                           class="btn btn-outline-secondary">
+                            ↩️ İlanlara Dön
+                        </a>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}
