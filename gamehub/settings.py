@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'gamehub',
     'accounts',
     'kategoriler',
     'oyunlar',
@@ -55,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'gamehub.urls'
+ROOT_URLCONF = 'GameHub.urls'
 
 TEMPLATES = [
     {
