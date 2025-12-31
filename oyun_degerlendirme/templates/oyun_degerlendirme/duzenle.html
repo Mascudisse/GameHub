@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block title %}Değerlendirmeyi Düzenle | GameHub{% endblock %}
+
+{% block icerik %}
+<style>
+    /* Antrasit Temalı Değişkenler */
+    :root {
+        --dark-anthracite: #212529;
+        --soft-gray: #f8f9fa;
+        --border-color: #dee2e6;
+    }
+
+    .edit-wrapper {
+        background-color: var(--soft-gray);
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        padding: 40px 0;
+    }
+
+    /* Kart Tasarımı */
+    .edit-card {
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        background: #ffffff;
+        overflow: hidden;
+    }
+
+    .card-header-custom {
+        background-color: var(--dark-anthracite);
+        color: white;
+        padding: 30px;
+        text-align: center;
+    }
+
+    /* Form Kontrolleri */
+    .form-control {
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    .form-control:focus {
+        border-color: var(--dark-anthracite);
+        box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.1);
+    }
+
+    /* Puan Inputu Özel Stil */
+    .puan-input {
+        font-weight: 700;
+        color: var(--dark-anthracite);
+    }
+
+    /* Butonlar */
+    .btn-update-custom {
+        background-color: var(--dark-anthracite);
+        color: white;
+        padding: 12px;
+        border-radius: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border: none;
+        transition: all 0.3s;
+    }
+
+    .btn-update-custom:hover {
+        background-color: #343a40;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        color: white;
+    }
+
+    .btn-cancel {
+        border-radius: 10px;
+        padding: 10px;
+        font-weight: 600;
+        color: #6c757d;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .btn-cancel:hover {
+        color: var(--dark-anthracite);
+    }
+</style>
+
+<div class="edit-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5 col-md-8">
+
+                <div class="card edit-card shadow-lg">
+                    <div class="card-header-custom">
+                        <h3 class="fw-bold mb-1">
+                            <i class="bi bi-star-half me-2"></i>Değerlendirme
+                        </h3>
+                        <p class="small opacity-75 mb-0 text-uppercase">Görüşlerini Güncelle</p>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5">
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <div class="form-floating mb-3">
+                                <input type="text" name="oyun_adi" class="form-control" id="oyun_adi" 
+                                       placeholder="Oyun Adı" value="{{ degerlendirme.oyun_adi }}" required>
+                                <label for="oyun_adi">
+                                    <i class="bi bi-controller me-1"></i> Oyun Adı
+                                </label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="number" name="puan" class="form-control puan-input" id="puan" 
+                                       placeholder="Puan (1-10)" min="1" max="10" value="{{ degerlendirme.puan }}" required>
+                                <label for="puan">
+                                    <i class="bi bi-award me-1"></i> Puan (1-10)
+                                </label>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <textarea name="yorum" class="form-control" id="yorum" 
+                                          placeholder="Yorumunuz" style="height: 150px" required>{{ degerlendirme.yorum }}</textarea>
+                                <label for="yorum">
+                                    <i class="bi bi-chat-dots me-1"></i> Deneyimin Hakkında Ne Düşünüyorsun?
+                                </label>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-update-custom">
+                                    <i class="bi bi-arrow-repeat me-2"></i>Değişiklikleri Uygula
+                                </button>
+                                <div class="text-center mt-2">
+                                    <a href="javascript:history.back()" class="btn-cancel">
+                                        Vazgeç ve Geri Dön
+                                    </a>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <small class="text-muted">
+                        <i class="bi bi-info-circle me-1"></i> 
+                        Bu değerlendirme herkese açık olarak güncellenecektir.
+                    </small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

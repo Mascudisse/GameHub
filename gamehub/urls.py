@@ -23,8 +23,12 @@ urlpatterns = [
     path('kategoriler/',views.kategori_view,name="kategoriler"),
     path('iletisim/',views.iletisim_view,name="iletisim"),
     path('',views.home,name="anasayfa"),
-    path('accounts/',include('accounts.urls')),
+    path('accounts/',include('accounts.urls')), 
     
+    path('ilanlar/', include('oyuncu_ilanlari.urls')), 
+    
+    path('degerlendirme/', include('oyun_degerlendirme.urls')),  
+     
     path('oyunlar/',include('oyunlar.urls')),
    
 

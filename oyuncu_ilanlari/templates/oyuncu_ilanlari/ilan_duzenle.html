@@ -2,106 +2,181 @@
 {% block title %}İlan Düzenle | GameHub{% endblock %}
 
 {% block icerik %}
-<div class="row justify-content-center">
-    <div class="col-lg-6 col-md-8">
+<style>
+    /* Antrasit Renk Skalası ve Değişkenler */
+    :root {
+        --dark-anthracite: #212529;
+        --soft-gray: #f8f9fa;
+        --border-color: #dee2e6;
+        --input-focus: #495057;
+    }
 
-        <div class="card ilan-form-card shadow-lg border-0">
-            <div class="card-body p-4 p-md-5">
+    .edit-page-wrapper {
+        background-color: var(--soft-gray);
+        min-height: 90vh;
+        padding: 50px 0;
+    }
 
-                <!-- BAŞLIK -->
-                <div class="text-center mb-4">
-                    <h2 class="fw-bold">
-                        ✏️ İlan Düzenle
-                    </h2>
-                    <p class="text-muted mb-0">
-                        İlan bilgilerini güncelleyebilirsin
+    /* Kart Tasarımı */
+    .ilan-form-card {
+        border-radius: 16px;
+        border: 1px solid var(--border-color);
+        background: #ffffff;
+        overflow: hidden;
+    }
+
+    /* Başlık Alanı - Tam Antrasit */
+    .form-header-dark {
+        background-color: var(--dark-anthracite);
+        color: #ffffff;
+        padding: 40px 20px;
+        text-align: center;
+    }
+
+    /* Floating Labels & Form Kontrolleri */
+    .form-control {
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        color: var(--dark-anthracite);
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: var(--dark-anthracite);
+        box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.05);
+    }
+
+    .form-floating > label {
+        color: #6c757d;
+    }
+
+    /* Butonlar */
+    .btn-update {
+        background-color: var(--dark-anthracite);
+        border: none;
+        color: white;
+        padding: 14px;
+        border-radius: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+
+    .btn-update:hover {
+        background-color: #343a40;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(33, 37, 41, 0.2);
+        color: white;
+    }
+
+    .btn-return {
+        border: 2px solid var(--dark-anthracite);
+        color: var(--dark-anthracite);
+        border-radius: 10px;
+        padding: 12px;
+        font-weight: 600;
+        transition: all 0.2s;
+    }
+
+    .btn-return:hover {
+        background-color: var(--dark-anthracite);
+        color: white;
+    }
+
+    /* İkonlar */
+    .bi {
+        vertical-align: middle;
+    }
+</style>
+<div class="edit-page-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-10">
+
+                <div class="card ilan-form-card shadow-sm">
+                    <div class="form-header-dark shadow-sm">
+                        <h2 class="fw-bold mb-1">
+                            <i class="bi bi-pencil-square me-2"></i>İLAN DÜZENLE
+                        </h2>
+                        <p class="opacity-75 mb-0 small text-uppercase fw-medium" style="letter-spacing: 2px;">
+                            GameHub İlan Yönetimi
+                        </p>
+                    </div>
+
+                    <div class="card-body p-4 p-md-5">
+                        <form method="post">
+                            {% csrf_token %}
+
+                            <div class="form-floating mb-3">
+                                <input type="text" name="oyun_adi" class="form-control" id="id_oyun_adi" 
+                                       placeholder="Oyun Adı" value="{{ ilan.oyun_adi }}" required>
+                                <label for="id_oyun_adi">
+                                    <i class="bi bi-controller me-2 text-dark"></i>Oyun Adı
+                                </label>
+                            </div>
+
+                            <div class="form-floating mb-3">
+                                <input type="text" name="oyuncu_adi" class="form-control" id="id_oyuncu_adi" 
+                                       placeholder="Oyuncu Adı" value="{{ ilan.oyuncu_adi }}" required>
+                                <label for="id_oyuncu_adi">
+                                    <i class="bi bi-person-badge me-2 text-dark"></i>Oyuncu Adı / Nickname
+                                </label>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" name="rank" class="form-control" id="id_rank" 
+                                               placeholder="Rank" value="{{ ilan.rank }}">
+                                        <label for="id_rank">
+                                            <i class="bi bi-trophy me-2 text-dark"></i>Mevcut Rank
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="form-floating">
+                                        <input type="text" name="platform" class="form-control" id="id_platform" 
+                                               placeholder="Platform" value="{{ ilan.platform }}">
+                                        <label for="id_platform">
+                                            <i class="bi bi-display me-2 text-dark"></i>Platform
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-floating mb-4">
+                                <textarea name="aciklama" class="form-control" id="id_aciklama" 
+                                          placeholder="Açıklama" style="height: 140px">{{ ilan.aciklama }}</textarea>
+                                <label for="id_aciklama">
+                                    <i class="bi bi-chat-left-text me-2 text-dark"></i>İlan Detayları
+                                </label>
+                            </div>
+
+                            <div class="d-grid gap-3">
+                                <button type="submit" class="btn btn-update btn-lg shadow-sm">
+                                    <i class="bi bi-check-circle-fill me-2"></i>GÜNCELLEMEYİ KAYDET
+                                </button>
+
+                                <a href="{% url 'oyuncu_ilanlari:ilan_listesi' %}" class="btn btn-return">
+                                    <i class="bi bi-arrow-left me-1"></i> Listeye Geri Dön
+                                </a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <p class="text-muted small">
+                        <i class="bi bi-shield-check me-1"></i> 
+                        Bu ilan <strong>{{ user.username }}</strong> tarafından düzenlenmektedir.
                     </p>
                 </div>
 
-                <!-- FORM -->
-                <form method="post">
-                    {% csrf_token %}
-
-                    <!-- OYUN ADI -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">
-                            🎮 Oyun Adı
-                        </label>
-                        <input
-                            type="text"
-                            name="oyun_adi"
-                            class="form-control form-control-lg"
-                            value="{{ ilan.oyun_adi }}"
-                            required>
-                    </div>
-
-                    <!-- OYUNCU ADI -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">
-                            👤 Oyuncu Adı
-                        </label>
-                        <input
-                            type="text"
-                            name="oyuncu_adi"
-                            class="form-control form-control-lg"
-                            value="{{ ilan.oyuncu_adi }}"
-                            required>
-                    </div>
-
-                    <!-- RANK -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">
-                            📊 Rank
-                        </label>
-                        <input
-                            type="text"
-                            name="rank"
-                            class="form-control"
-                            value="{{ ilan.rank }}">
-                    </div>
-
-                    <!-- PLATFORM -->
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">
-                            💻 Platform
-                        </label>
-                        <input
-                            type="text"
-                            name="platform"
-                            class="form-control"
-                            value="{{ ilan.platform }}">
-                    </div>
-
-                    <!-- AÇIKLAMA -->
-                    <div class="mb-4">
-                        <label class="form-label fw-semibold">
-                            📝 Açıklama
-                        </label>
-                        <textarea
-                            name="aciklama"
-                            rows="4"
-                            class="form-control"
-                            placeholder="Kendin ve aradığın takım arkadaşı hakkında bilgi ver...">{{ ilan.aciklama }}</textarea>
-                    </div>
-
-                    <!-- BUTONLAR -->
-                    <div class="d-grid gap-2">
-                        <button type="submit"
-                                class="btn btn-warning btn-lg fw-semibold">
-                            💾 Güncelle
-                        </button>
-
-                        <a href="{% url 'oyuncu_ilanlari:ilan_listesi' %}"
-                           class="btn btn-outline-secondary">
-                            ↩️ İlanlara Dön
-                        </a>
-                    </div>
-
-                </form>
-
             </div>
         </div>
-
     </div>
-</div>
+</div> 
 {% endblock %}

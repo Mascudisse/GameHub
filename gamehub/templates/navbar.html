@@ -1,40 +1,79 @@
 {% load static %}
-<header>
-    <a href="{%url 'anasayfa' %}"><div class="logo">GameHub</div></a>
-    
-    <div class="nav-container">
-        <nav>
-            <ul class="nav-links">
-                <li><a href="{%url 'anasayfa' %}">Ana Sayfa</a></li>
-                <li><a href="{% url 'hakkimizda' %}">Hakkımızda</a></li>
-                
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'kategoriler' %}">Kategoriler</a></li> 
-                <li><a href="{% url 'ana_oyunlar'%}">Oyunlar</a></li>
-                <li><a href="{% url 'iletisim'%}">İletişim</a></li>
-                
-
-                {% endif %}
-                
-            </ul>
-        </nav>
-
-       <div class="auth-buttons">
-    {% if user.is_authenticated %}
-        <a href="#" class="nav-btn btn-user btn-blue">
-            <i class="fas fa-user"></i> {{ user.first_name }}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm py-3">
+    <div class="container">
+        <a class="navbar-brand fw-bold fs-3 text-primary" href="{% url 'anasayfa' %}" style="letter-spacing: 1px;">
+            GAME<span class="text-white">HUB</span>
         </a>
 
-        <form action="{% url 'logout' %}" method="post" style="display: inline;">
-            {% csrf_token %}
-            <button type="submit" class="nav-btn btn-logout btn-red">
-                <i class="fas fa-sign-out-alt"></i> ÇIKIŞ
-            </button>
-        </form>
-    {% else %}
-        <a href="{% url 'login' %}" class="nav-btn btn-signin">Giriş Yap</a>
-        <a href="{% url 'register' %}" class="nav-btn btn-signup">Kayıt Ol</a>
-    {% endif %}
-</div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#gamehubNavbar" aria-controls="gamehubNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="gamehubNavbar">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'anasayfa' %}">Ana Sayfa</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'hakkimizda' %}">Hakkımızda</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'oyuncu_ilanlari:ilan_listesi' %}">İlanlar</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'oyun_degerlendirme:liste' %}">Oyun Değerlendirme</a>
+                </li>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'kategoriler' %}">Kategoriler</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'ana_oyunlar' %}">Oyunlar</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'iletisim' %}">İletişim</a>
+                </li>
+                
+                {% endif %}
+            </ul>
+
+            <div class="d-flex align-items-center gap-2">
+                {% if user.is_authenticated %}
+                    <a href="#" class="btn btn-outline-info rounded-pill px-3 me-2">
+                        <i class="fas fa-user me-1"></i> {{ user.first_name|default:user.username }}
+                    </a>
+
+                    <form action="{% url 'logout' %}" method="post" class="m-0">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger rounded-pill px-4 shadow-sm">
+                            <i class="fas fa-sign-out-alt me-1"></i> ÇIKIŞ
+                        </button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-light rounded-pill px-4 me-2">Giriş Yap</a>
+                    <a href="{% url 'register' %}" class="btn btn-primary rounded-pill px-4 shadow">Kayıt Ol</a>
+                {% endif %}
+            </div>
+        </div>
     </div>
-</header>
+</nav>
+
+<style>
+    /* Navbar Link Efektleri */
+    .nav-link {
+        font-weight: 500;
+        transition: color 0.3s ease;
+        margin: 0 5px;
+    }
+    .nav-link:hover {
+        color: #0d6efd !important; /* Bootstrap Primary Mavisi */
+    }
+    /* Logo Stil */
+    .navbar-brand {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    /* Aktif sayfa alt çizgisi (opsiyonel) */
+    .nav-link.active {
+        border-bottom: 2px solid #0d6efd;
+    }
+</style> 

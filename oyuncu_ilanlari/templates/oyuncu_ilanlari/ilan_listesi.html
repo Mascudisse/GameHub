@@ -3,88 +3,207 @@
 {% block title %}Oyuncu İlanları | GameHub{% endblock %}
 
 {% block icerik %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
-<div class="text-center mb-5">
-    <h1 class="fw-bold display-5">🎮 Oyuncu İlanları</h1>
-    <p class="text-muted fs-5">
-        Takım arkadaşını bul, oyuna birlikte gir!
-    </p>
-</div>
+<style>
+    :root {
+        --dark-anthracite: #212529;
+        --soft-gray: #f8f9fa;
+        --card-border: #e9ecef;
+        --text-secondary: #6c757d;
+    }
 
-<div class="row g-4">
+    body {
+        background-color: var(--soft-gray);
+    }
 
-{% for ilan in ilanlar %}
-<div class="col-lg-4 col-md-6">
-    <div class="card ilan-card h-100 shadow-sm border-0">
+    /* Başlık Tasarımı */
+    .page-title {
+        color: var(--dark-anthracite);
+        font-weight: 800;
+        letter-spacing: -1px;
+    }
 
-        <div class="card-body d-flex flex-column">
+    .title-underline {
+        width: 50px;
+        height: 4px;
+        background-color: var(--dark-anthracite);
+        margin: 1rem auto;
+        border-radius: 2px;
+    }
 
-            <!-- OYUN ADI -->
-            <h5 class="card-title fw-bold mb-3 text-primary">
-                🎯 {{ ilan.oyun_adi }}
-            </h5>
+    /* Kart Tasarımı */
+    .ilan-card {
+        border: 1px solid var(--card-border);
+        border-radius: 20px;
+        background: #ffffff;
+        transition: all 0.3s ease;
+    }
 
-            <!-- BİLGİLER -->
-            <ul class="list-unstyled small mb-3 ilan-bilgi">
-                <li class="mb-1">
-                    <i class="fas fa-user text-secondary"></i>
-                    <b>Oyuncu:</b> {{ ilan.oyuncu_adi }}
-                </li>
-                <li class="mb-1">
-                    <i class="fas fa-chart-line text-secondary"></i>
-                    <b>Rank:</b> {{ ilan.rank|default:"Belirtilmemiş" }}
-                </li>
-                <li>
-                    <i class="fas fa-desktop text-secondary"></i>
-                    <b>Platform:</b> {{ ilan.platform|default:"Belirtilmemiş" }}
-                </li>
-            </ul>
+    .ilan-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(33, 37, 41, 0.05) !important;
+    }
 
-            <!-- AÇIKLAMA -->
-            <p class="ilan-aciklama flex-grow-1 text-muted">
-                {{ ilan.aciklama|truncatechars:120 }}
-            </p>
+    .game-title {
+        color: var(--dark-anthracite);
+        font-weight: 800;
+        font-size: 1.15rem;
+        margin-bottom: 1.2rem;
+    }
 
-            <!-- BUTONLAR -->
-            <div class="mt-3 d-grid gap-2">
+    /* Bilgi Satırları */
+    .info-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        font-size: 0.9rem;
+    }
 
-                
+    .info-label {
+        color: var(--text-secondary);
+    }
 
-                <div class="d-flex justify-content-between gap-2">
+    .info-value {
+        font-weight: 600;
+        color: var(--dark-anthracite);
+    }
 
-                    <a href="{% url 'oyuncu_ilanlari:ilan_duzenle' ilan.id %}"
-                       class="btn btn-outline-warning btn-sm w-100">
-                        ✏️ Düzenle
-                    </a>
+    /* Profesyonel Sade Butonlar */
+    .action-container {
+        display: flex;
+        gap: 10px;
+        margin-top: auto;
+        padding-top: 1.5rem;
+    }
 
-                    <a href="{% url 'oyuncu_ilanlari:ilan_sil' ilan.id %}"
-                       class="btn btn-outline-danger btn-sm w-100"
-                       onclick="return confirm('Bu ilan silinsin mi?')">
-                        🗑️ Sil
-                    </a>
+    /* Düzenle: Ana İşlem */
+    .btn-edit-minimal {
+        background-color: var(--dark-anthracite);
+        color: white !important;
+        flex-grow: 1;
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
+        transition: 0.2s;
+        border: none;
+    }
 
+    .btn-edit-minimal:hover {
+        background-color: #000;
+    }
+
+    /* Sil: İkincil İşlem (Sadece İkon) */
+    .btn-delete-minimal {
+        width: 42px;
+        height: 42px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        color: #dc3545;
+        background-color: #fff5f5;
+        transition: 0.2s;
+        text-decoration: none;
+        border: 1px solid #fee2e2;
+    }
+
+    .btn-delete-minimal:hover {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    /* Yeni İlan Butonu */
+    .btn-add-primary {
+        background-color: var(--dark-anthracite);
+        color: white !important;
+        padding: 15px 40px;
+        border-radius: 14px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        text-decoration: none;
+        display: inline-block;
+        transition: 0.3s;
+    }
+
+    .btn-add-primary:hover {
+        transform: scale(1.03);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+</style>
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-5 page-title">🎮 OYUNCU İLANLARI</h1>
+        <div class="title-underline"></div>
+        <p class="text-muted">Takım arkadaşını bul, maceraya başla.</p>
+    </div>
+
+    <div class="row g-4">
+        {% for ilan in ilanlar %}
+        <div class="col-lg-4 col-md-6">
+            <div class="card ilan-card h-100 border-0 shadow-sm">
+                <div class="card-body p-4 d-flex flex-column">
+                    
+                    <h5 class="game-title">
+                        {{ ilan.oyun_adi|upper }}
+                    </h5>
+
+                    <div class="mb-3">
+                        <div class="info-item">
+                            <span class="info-label">Oyuncu</span>
+                            <span class="info-value">{{ ilan.oyuncu_adi }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Rank</span>
+                            <span class="info-value text-uppercase">{{ ilan.rank|default:"-" }}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Platform</span>
+                            <span class="info-value">{{ ilan.platform|default:"PC" }}</span>
+                        </div>
+                    </div>
+
+                    <p class="text-muted small mb-0" style="line-height: 1.5;">
+                        {{ ilan.aciklama|truncatechars:90 }}
+                    </p>
+                    
+                    {% if user.is_authenticated %}
+                    <div class="action-container">
+                        <a href="{% url 'oyuncu_ilanlari:ilan_duzenle' ilan.id %}" class="btn-edit-minimal">
+                            <i class="bi bi-pencil-square me-2"></i>Düzenle
+                        </a>
+                        
+                        <a href="{% url 'oyuncu_ilanlari:ilan_sil' ilan.id %}" 
+                           class="btn-delete-minimal" 
+                           onclick="return confirm('Bu ilanı silmek istediğinize emin misiniz?')"
+                           title="Sil">
+                            <i class="bi bi-trash3"></i>
+                        </a>
+                    </div>
+                    {% endif%}
                 </div>
             </div>
-
         </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <i class="bi bi-person-x display-1 text-muted opacity-25"></i>
+            <h4 class="mt-3 text-muted">Aktif ilan bulunamadı.</h4>
+        </div>
+        {% endfor %}
     </div>
-</div>
-{% empty %}
-<div class="col-12">
-    <div class="alert alert-dark text-center fs-5">
-        🚫 Henüz ilan yok.
+    
+    {% if user.is_authenticated %}
+    <div class="text-center mt-5">
+        <a href="{% url 'oyuncu_ilanlari:ilan_ekle' %}" class="btn-add-primary">
+            <i class="bi bi-plus-lg me-2"></i>YENİ İLAN OLUŞTUR
+        </a>
     </div>
-</div>
-{% endfor %}
-
-</div>
-
-<!-- YENİ İLAN -->
-<div class="text-center mt-5">
-    <a href="{% url 'ilan_ekle' %}"
-       class="btn btn-primary btn-lg px-5 py-3 shadow">
-        ➕ Yeni İlan Ekle
-    </a>
+    {%endif%}
 </div>
 
 {% endblock %}
