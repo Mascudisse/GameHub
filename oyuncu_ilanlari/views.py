@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import OyuncuIlan
-
+from django.contrib.auth.decorators import login_required
 
 def ilan_listesi(request):
     ilanlar = OyuncuIlan.objects.all().order_by("-id")
@@ -10,7 +10,7 @@ def ilan_listesi(request):
         {"ilanlar": ilanlar}
     )
 
-
+@login_required
 def ilan_duzenle(request, id):
     ilan = get_object_or_404(OyuncuIlan, id=id)
 
@@ -30,14 +30,13 @@ def ilan_duzenle(request, id):
         {"ilan": ilan}
     )
 
-
+@login_required
 def ilan_sil(request, id):
     ilan = get_object_or_404(OyuncuIlan, id=id)
     ilan.delete()
     return redirect("oyuncu_ilanlari:ilan_listesi")
-from django.shortcuts import render, redirect
-from .models import OyuncuIlan
 
+@login_required
 def ilan_ekle(request):
     if request.method == "POST":
         # Formdan gelen verileri alıyoruz

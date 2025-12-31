@@ -1,57 +1,194 @@
 {% extends "base.html" %}
-{% block title %}Oyun Değerlendirmeleri{% endblock %}
+{% block title %}Oyun Değerlendirmeleri | GameHub{% endblock %}
 
 {% block icerik %}
-<h1 class="mb-4 text-center">⭐ Oyun Değerlendirmeleri</h1>
+<style>
+    /* Renk Skalası Ayarları */
+    :root {
+        --dark-anthracite: #212529;
+        --soft-gray: #f8f9fa;
+        --border-color: #dee2e6;
+        --star-gold: #ffc107;
+    }
 
-<div class="row g-4">
-{% for d in degerlendirmeler %}
-<div class="col-md-4">
-    <div class="card shadow h-100">
-        <div class="card-body d-flex flex-column">
+    body {
+        background-color: var(--soft-gray);
+    }
 
-            <h5 class="fw-bold">{{ d.oyun_adi }}</h5>
-            <p>⭐ {{ d.puan }}/5</p>
+    /* Başlık Alanı */
+    .page-header {
+        margin-bottom: 3rem;
+    }
 
-            <p class="text-muted flex-grow-1">
-                {{ d.yorum|truncatechars:100 }}
-            </p>
+    .title-line {
+        width: 60px;
+        height: 4px;
+        background-color: var(--dark-anthracite);
+        margin: 1rem auto;
+        border-radius: 2px;
+    }
 
-            <small>👤 {{ d.kullanici.username|default:"Misafir" }}</small>
+    /* Review Kart Tasarımı */
+    .review-grid-card {
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        background: #ffffff;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+    }
 
-            {% if user.is_authenticated and d.kullanici and user.id == d.kullanici.id %}
-            <div class="mt-3 d-flex gap-2">
-                <a href="{% url 'oyun_degerlendirme:duzenle' d.id %}"
-                   class="btn btn-sm btn-outline-warning w-100">
-                    ✏️ Düzenle
-                </a>
+    .review-grid-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(33, 37, 41, 0.08) !important;
+        border-color: var(--dark-anthracite);
+    }
 
-                <form method="post"
-                      action="{% url 'oyun_degerlendirme:sil' d.id %}"
-                      class="w-100"
-                      onsubmit="return confirm('Silinsin mi?')">
-                    {% csrf_token %}
-                    <button class="btn btn-sm btn-outline-danger w-100">
-                        🗑️ Sil
-                    </button>
-                </form>
-            </div>
-            {% endif %}
+    .game-title {
+        color: var(--dark-anthracite);
+        font-weight: 800;
+        font-size: 1.2rem;
+        letter-spacing: -0.3px;
+    }
 
-        </div>
+    .score-badge {
+        background-color: var(--dark-anthracite);
+        color: white;
+        padding: 4px 10px;
+        border-radius: 8px;
+        font-weight: 700;
+    }
+
+    /* Yorum Alanı */
+    .quote-icon {
+        color: var(--dark-anthracite);
+        opacity: 0.15;
+        font-size: 2rem;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+
+    .comment-text {
+        color: #495057;
+        font-style: italic;
+        line-height: 1.7;
+        font-size: 0.95rem;
+    }
+
+    /* Alt Bilgi Alanı */
+    .user-info {
+        background-color: #f1f3f5;
+        border-radius: 10px;
+        padding: 8px 15px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        color: var(--dark-anthracite);
+    }
+
+    /* Butonlar */
+    .btn-action-dark {
+        width: 36px;
+        height: 36px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        transition: 0.2s;
+    }
+
+    .btn-main-add {
+        background-color: var(--dark-anthracite);
+        color: white;
+        border: none;
+        padding: 14px 40px;
+        border-radius: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.3s;
+    }
+
+    .btn-main-add:hover {
+        background-color: #343a40;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(33, 37, 41, 0.2);
+        color: white;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="page-header text-center">
+        <h1 class="display-5 fw-bold text-dark mb-2">⭐ TOPLULUK YORUMLARI</h1>
+        <div class="title-line"></div>
+        <p class="text-muted">Oyuncuların deneyimlerine göre en iyi oyunları keşfedin</p>
     </div>
-</div>
-{% empty %}
-<div class="col-12 text-center">
-    Henüz değerlendirme yok.
-</div>
-{% endfor %}
-</div>
 
-<div class="text-center mt-5">
-    <a href="{% url 'oyun_degerlendirme:ekle' %}"
-       class="btn btn-primary btn-lg">
-        ➕ Değerlendirme Ekle
-    </a>
+    <div class="row g-4">
+        {% for d in degerlendirmeler %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card review-grid-card shadow-sm h-100 p-3">
+                <i class="bi bi-quote quote-icon"></i>
+                
+                <div class="card-body d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <h5 class="game-title text-uppercase mb-0">{{ d.oyun_adi }}</h5>
+                        <div class="score-badge">
+                            <i class="bi bi-star-fill text-warning small me-1"></i>{{ d.puan }}<small class="opacity-50">/5</small>
+                        </div>
+                    </div>
+
+                    <div class="flex-grow-1">
+                        <p class="comment-text mb-4">
+                            "{{ d.yorum|truncatechars:150 }}"
+                        </p>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mt-auto pt-3 border-top">
+                        <div class="user-info">
+                            <i class="bi bi-person-circle"></i>
+                            {{ d.kullanici.username|default:"Anonim Oyuncu" }}
+                        </div>
+
+                        {% if user.is_authenticated and d.kullanici and user.id == d.kullanici.id %}
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'oyun_degerlendirme:duzenle' d.id %}" 
+                               class="btn btn-outline-dark btn-action-dark" 
+                               title="Düzenle">
+                                <i class="bi bi-pencil-square"></i>
+                            </a>
+
+                            <form method="post" action="{% url 'oyun_degerlendirme:sil' d.id %}" 
+                                  onsubmit="return confirm('Bu değerlendirmeyi kalıcı olarak silmek istediğinize emin misiniz?')">
+                                {% csrf_token %}
+                                <button class="btn btn-outline-danger btn-action-dark" title="Sil">
+                                    <i class="bi bi-trash3"></i>
+                                </button>
+                            </form>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <i class="bi bi-journal-x display-1 text-muted opacity-25"></i>
+            <h4 class="mt-4 text-muted">Henüz yorum yapılmamış.</h4>
+            <p>Hemen bir inceleme paylaşarak rehberlik et!</p>
+        </div>
+        {% endfor %}
+    </div>
+    
+    {% if user.is_authenticated %}
+    <div class="text-center mt-5">
+        <a href="{% url 'oyun_degerlendirme:ekle' %}" class="btn btn-main-add">
+            <i class="bi bi-plus-lg me-2"></i>DEĞERLENDİRME EKLE
+        </a>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}

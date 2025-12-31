@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import OyunDegerlendirme
+from django.contrib.auth.decorators import login_required
+
 
 def degerlendirme_listesi(request):
     degerlendirmeler = OyunDegerlendirme.objects.all().order_by("-id")
@@ -7,7 +9,7 @@ def degerlendirme_listesi(request):
         "degerlendirmeler": degerlendirmeler
     })
 
-
+@login_required
 def degerlendirme_ekle(request):
     if request.method == "POST":
         OyunDegerlendirme.objects.create(
@@ -20,7 +22,7 @@ def degerlendirme_ekle(request):
 
     return render(request, "oyun_degerlendirme/ekle.html")
 
-
+@login_required
 def degerlendirme_duzenle(request, id):
     degerlendirme = get_object_or_404(OyunDegerlendirme, id=id)
 
@@ -35,7 +37,7 @@ def degerlendirme_duzenle(request, id):
         "degerlendirme": degerlendirme
     })
 
-
+@login_required
 def degerlendirme_sil(request, id):
     if request.method == "POST":
         degerlendirme = get_object_or_404(OyunDegerlendirme, id=id)

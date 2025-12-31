@@ -1,21 +1,178 @@
 {% extends "base.html" %}
-{% block title %}Değerlendirme Ekle{% endblock %}
+{% block title %}Değerlendirme Yap | GameHub{% endblock %}
 
 {% block icerik %}
-<div class="row justify-content-center">
-<div class="col-md-6">
-<div class="card p-4 shadow">
-<h3 class="text-center mb-4">➕ Değerlendirme Ekle</h3>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
-<form method="post">
-{% csrf_token %}
-<input name="oyun_adi" class="form-control mb-3" placeholder="Oyun adı">
-<input name="puan" type="number" min="1" max="5" class="form-control mb-3">
-<textarea name="yorum" class="form-control mb-3" placeholder="Yorum"></textarea>
-<button class="btn btn-success w-100">Kaydet</button>
-</form>
+<style>
+    /* Antrasit Renk Skalası Ayarları */
+    :root {
+        --dark-anthracite: #212529;
+        --soft-gray: #f8f9fa;
+        --border-color: #dee2e6;
+        --accent-gray: #343a40;
+    }
 
-</div>
-</div>
+    .page-wrapper {
+        background-color: var(--soft-gray);
+        min-height: 85vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    /* Kart Tasarımı */
+    .review-card {
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        border-radius: 20px;
+        overflow: hidden;
+    }
+
+    /* Başlık Alanı - Tam Antrasit */
+    .review-header-dark {
+        background-color: var(--dark-anthracite);
+        color: white;
+        padding: 35px 20px;
+        text-align: center;
+    }
+
+    /* Yıldız Oylama Sistemi */
+    .star-rating {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: center;
+        gap: 12px;
+        margin: 15px 0 25px 0;
+    }
+
+    .star-rating input {
+        display: none;
+    }
+
+    .star-rating label {
+        font-size: 2.2rem;
+        color: #e9ecef;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    /* Seçilen ve üzerine gelinen yıldızlar */
+    .star-rating input:checked ~ label,
+    .star-rating label:hover,
+    .star-rating label:hover ~ label {
+        color: #ffc107; /* Altın Sarısı */
+        transform: scale(1.15);
+        text-shadow: 0 0 10px rgba(255, 193, 7, 0.3);
+    }
+
+    /* Form Kontrolleri */
+    .form-control {
+        border: 2px solid #edeff2;
+        border-radius: 12px;
+        padding: 12px 15px;
+        font-weight: 500;
+        transition: all 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: var(--dark-anthracite);
+        box-shadow: 0 0 0 0.25rem rgba(33, 37, 41, 0.08);
+    }
+
+    /* Profesyonel Antrasit Buton */
+    .btn-anthracite {
+        background-color: var(--dark-anthracite);
+        border: none;
+        color: white;
+        font-weight: 700;
+        letter-spacing: 1px;
+        padding: 15px;
+        border-radius: 12px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+    }
+
+    .btn-anthracite:hover {
+        background-color: var(--accent-gray);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(33, 37, 41, 0.2);
+        color: white;
+    }
+
+    .form-floating > label {
+        color: #6c757d;
+    }
+</style>
+
+<div class="page-wrapper">
+    <div class="col-md-8 col-lg-5">
+        <div class="card review-card shadow-lg">
+            
+            <div class="review-header-dark shadow-sm">
+                <div class="mb-2">
+                    <span class="badge rounded-pill bg-light text-dark p-2 px-3 fw-bold">
+                        <i class="bi bi-patch-check-fill me-1"></i> TOPLULUK PANELİ
+                    </span>
+                </div>
+                <h3 class="fw-bold mb-1">DENEYİMİNİ PAYLAŞ</h3>
+                <p class="small opacity-75 mb-0" style="letter-spacing: 1px;">DÜŞÜNCELERİN DİĞER OYUNCULARA YOL GÖSTERİR</p>
+            </div>
+            
+            <div class="card-body p-4 p-md-5">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-floating mb-4">
+                        <input type="text" name="oyun_adi" class="form-control" id="id_oyun_adi" placeholder="Oyun adı" required>
+                        <label for="id_oyun_adi">
+                            <i class="bi bi-controller me-2 text-dark"></i>Hangi Oyunu Değerlendiriyorsun?
+                        </label>
+                    </div>
+
+                    <div class="text-center">
+                        <label class="form-label text-dark small fw-bold text-uppercase" style="letter-spacing: 1px;">Oyun Puanın</label>
+                    </div>
+                    <div class="star-rating">
+                        <input type="radio" id="star5" name="puan" value="5" required />
+                        <label for="star5" title="Mükemmel"><i class="bi bi-star-fill"></i></label>
+                        
+                        <input type="radio" id="star4" name="puan" value="4" />
+                        <label for="star4" title="Çok İyi"><i class="bi bi-star-fill"></i></label>
+                        
+                        <input type="radio" id="star3" name="puan" value="3" />
+                        <label for="star3" title="Ortalama"><i class="bi bi-star-fill"></i></label>
+                        
+                        <input type="radio" id="star2" name="puan" value="2" />
+                        <label for="star2" title="Kötü"><i class="bi bi-star-fill"></i></label>
+                        
+                        <input type="radio" id="star1" name="puan" value="1" />
+                        <label for="star1" title="Berbat"><i class="bi bi-star-fill"></i></label>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        <textarea name="yorum" class="form-control" placeholder="Yorum" id="id_yorum" style="height: 160px" required></textarea>
+                        <label for="id_yorum">
+                            <i class="bi bi-chat-left-dots-fill me-2 text-dark"></i>Detaylı İncelemen...
+                        </label>
+                    </div>
+
+                    <div class="d-grid gap-3">
+                        <button class="btn btn-anthracite btn-lg shadow-sm" type="submit">
+                            <i class="bi bi-send-check-fill me-2"></i> İncelemeyi Yayınla
+                        </button>
+                        <a href="javascript:history.back()" class="btn btn-link text-decoration-none text-muted small">
+                            Vazgeç ve Geri Dön
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="text-center mt-4 text-muted small">
+            <i class="bi bi-info-circle me-1"></i> İncelemeniz onaylandıktan sonra <strong>Topluluk Yorumları</strong> sayfasında görünecektir.
+        </div>
+    </div>
 </div>
 {% endblock %}
